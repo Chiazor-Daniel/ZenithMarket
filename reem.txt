@@ -1,0 +1,79 @@
+<div className=" text-white bg-gradient-to-b from-slate-700 to-slate-900">
+      <NavBar />
+      
+      {/* Hero Section - Keeping your original layout */}
+      <motion.div 
+        className="flex justify-between h-screen px-[100px] border-none bg-gradient-to-b from-slate-900 to-slate-700"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        <div className='w-1/2 flex p-4 items-center justify-center'>
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+          >
+            <h1 className='text-7xl font-bold'>
+              Secure and Easy
+            </h1>
+            <h1 className='text-6xl font-bold mt-2'>way to Trade</h1>
+            <motion.button
+              className="mt-8 px-6 py-3 bg-gold text-black rounded-full text-xl font-semibold"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Start Trading
+            </motion.button>
+            <div className='absolute w-full bottom-0 left-0'>
+              <Wave />
+            </div>
+          </motion.div>
+        </div>
+        <motion.div 
+          className='flex items-center w-1/2 justify-center h-full'
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <img src='rock.png' className='w-[800px]'/>
+        </motion.div>
+      </motion.div>
+
+      {/* Premium Features Section */}
+      <Section
+        title="Premium Trading Features"
+        content="Experience unparalleled trading with our advanced analytics, real-time market insights, and personalized portfolio management. Our platform is designed to give you the edge in today's dynamic financial markets."
+        imageSrc="/api/placeholder/600/400"
+      />
+
+      {/* Exclusive Access Section */}
+      <Section
+        title="Exclusive Market Access"
+        content="Gain access to exclusive investment opportunities and high-yield assets typically reserved for institutional investors. Our network opens doors to unique markets and premium financial products."
+        imageSrc="/api/placeholder/600/400"
+        reverse={true}
+      />
+
+      {/* Concierge Service Section */}
+      <Section
+        title="24/7 Concierge Service"
+        content="Enjoy round-the-clock support from our team of expert financial advisors. Whether you need market analysis, trade execution, or portfolio rebalancing, our concierge service is always at your disposal."
+        imageSrc="/api/placeholder/600/400"
+      />
+
+      {/* Footer */}
+      <footer className="bg-slate-800 text-white py-10 px-[100px]">
+        <div className="flex justify-between items-center">
+          <div>
+            <h3 className="text-2xl font-bold mb-4">Elite Trading Solutions</h3>
+            <p>Empowering wealth through intelligent trading</p>
+          </div>
+          <div>
+            <h4 className="text-xl font-semibold mb-2">Contact Us</h4>
+            <p>support@elitetrading.com</p>
+            <p>+1 (888) 555-TRADE</p>
+          </div>
+        </div>
+      </footer>
+    </div>
