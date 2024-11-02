@@ -10,7 +10,7 @@ import { FaEyeSlash } from "react-icons/fa";
 import { BASE_URL } from '../../api';
 import SetLogo from '../../setLogo';
 import bg6 from '../../assets/images/background/bg6.jpg';
-import finno from '../../assets/finno.png';
+import finno from '../../assets/zenithB.png';
 import useAuth from '../../customHooks/user/auth/useAuth';
 
 import { useEffect } from 'react';
@@ -94,7 +94,7 @@ function Login(props) {
                 {
                     !isMobile && (
                     <div className="bg-img-fix overflow-hidden col-md-5 col-0" style={{ background: '#fff url(' + bg6 + ')', height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
-                        {/* <img src={finno}  style={{margin: 'auto', width: '500px'}}/> */}
+                        <img src={finno}  style={{margin: 'auto', width: '500px'}}/>
                     </div>
                     )
                 }

@@ -13,7 +13,7 @@ const OrderForm = ({ tradePair, onPriceChange, onAmountChange, onTotalChange, on
 
     return (
         <>
-            <form onSubmit={onSubmit} style={{ flex: 1, height: "100%" , display: "grid", gap: "20px", margin: "auto"}}>
+            <form onSubmit={onSubmit} style={{ flex: 1, height: "100%" , display: "grid", gap: "20px", margin: "auto", position: 'relative'}}>
                 <div className="sell-blance">
                     <label className="form-label" style={{color: 'gray'}}>{tradePair}</label>
                     <div className="form-label blance"><span style={{color: 'gray'}}>BALANCE:</span><p style={{color: 'white'}}>${main_balance}</p></div>
@@ -24,8 +24,8 @@ const OrderForm = ({ tradePair, onPriceChange, onAmountChange, onTotalChange, on
 
                 {
                     myOrder === "limit" && (
-                    <div style={{ display: "flex", gap: "0px", flexDirection: "column" }}>
-                        <p>Risk Management: </p>
+                    <div style={{ display: "flex", gap: "0px", flexDirection: "column", position: 'absolute', bottom: '35px', right: '20%' }}>
+                        {/* <p>Risk Management: </p> */}
                         <RangeSlider
                             value={value}
                             onChange={changeEvent => setValue(changeEvent.target.value)}

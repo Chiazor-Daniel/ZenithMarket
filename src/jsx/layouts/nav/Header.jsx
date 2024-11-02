@@ -52,7 +52,7 @@ const Header = ({ onNote, onThemeChange, userType, superAdmin, asAdmin, setAsAdm
 							<div className="collapse navbar-collapse justify-content-between">
 								<div className="" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '', width: '100%' }}>
 									<div>
-										<p style={{ margin: 'auto', fontSize: '1.4rem', color: 'white' }}>Finnovent Capitals</p>
+										<p style={{ margin: 'auto', fontSize: '1.4rem', color: 'white' }}>Zenith Market</p>
 									</div>
 									{
 										!isMobile && (
