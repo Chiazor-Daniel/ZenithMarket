@@ -336,7 +336,7 @@ export const adminApi = createApi({
           console.log("redux", details); // Logging details for verification
       
           return {
-            url: "https://finno-api.finnovent.com/admin/super-admin/create-admin/",
+            url: "https://api.apextrustcapital/admin/super-admin/create-admin/",
             method: "POST",
             headers: {
               'Content-Type': 'application/json',

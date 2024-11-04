@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { loginStart, loginFailure, loginSuccess } from '../../redux-contexts/redux/features/auth/authSlice';
 import axios from 'axios';
 import Spinner from 'react-bootstrap/Spinner';
-import { ToastContainer } from 'react-toastify'; // Add this import if toast is used here
+import { ToastContainer, toast } from 'react-toastify'; 
 import { IoEyeSharp } from "react-icons/io5";
 import { FaEyeSlash } from "react-icons/fa";
 import { BASE_URL } from '../../api';
@@ -12,12 +12,11 @@ import SetLogo from '../../setLogo';
 import bg6 from '../../assets/images/background/bg6.jpg';
 import finno from '../../assets/zenithB.png';
 import useAuth from '../../customHooks/user/auth/useAuth';
-
 import { useEffect } from 'react';
-// import finno from "../../assets/finno.png"
 import { useResponsive } from '../../redux-contexts/context/responsive';
+
 function Login(props) {
-    const { loginUser, load } = useAuth(); // Use the custom hook
+    const { loginUser, load } = useAuth(); 
     const dispatch = useDispatch()
     const navigate = useNavigate();
     const {isMobile} = useResponsive()
@@ -25,13 +24,17 @@ function Login(props) {
     let errorsObj = { email: '', password: '' };
     const [errors, setErrors] = useState(errorsObj);
     const [password, setPassword] = useState('');
-      
+    const [rememberMe, setRememberMe] = useState(true);
+    const [showPass, setShowPass] = useState(false);
+    const [lastSubmitTime, setLastSubmitTime] = useState(null);
+    const [isHoneypotFilled, setIsHoneypotFilled] = useState(false);
+    const honeypotRef = useRef(null);
+
     function getCookie(name) {
         const value = `; ${document.cookie}`;
         const parts = value.split(`; ${name}=`);
         if (parts.length === 2) return parts.pop().split(';').shift();
     }
-    
     
     const prizeToken = getCookie('prizeToken');
 
@@ -67,6 +70,23 @@ function Login(props) {
 
     function onLogin(e) {
         e.preventDefault();
+
+        // Check for bot activity
+        if (isHoneypotFilled) {
+            toast.error('Bot detected. Access denied!');
+            return;
+        }
+
+        // Rate limiter
+        const currentTime = new Date().getTime();
+        const timeSinceLastSubmit = currentTime - (lastSubmitTime || 0);
+        const minimumDelay = 2000; // 2 seconds
+        if (lastSubmitTime && timeSinceLastSubmit < minimumDelay) {
+            toast.error(`Please wait ${Math.ceil((minimumDelay - timeSinceLastSubmit) / 1000)} seconds before trying again.`);
+            return;
+        }
+        setLastSubmitTime(currentTime);
+
         loginUser(email, password, navigate, props);
         let error = false;
         const errorObj = { ...errorsObj };
@@ -84,8 +104,9 @@ function Login(props) {
         }
     }
 
-    const [rememberMe, setRememberMe] = useState(true);
-    const [showPass, setShowPass] = useState(false);
+    const handleHoneypotChange = (e) => {
+        setIsHoneypotFilled(e.target.value.trim() !== '');
+    };
 
     return (
         <div className="page-wraper">
@@ -143,9 +164,12 @@ function Login(props) {
                                             <input style={{background: 'transparent', border: '1px solid rgba(243, 243, 243, 0.04)'}} type={showPass ? "text" : "password"} className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} placeholder='Enter Password' />
                                             {errors.password && <div className="text-danger fs-12">{errors.password}</div>}
                                         </div>
+                                        {/* Honeypot input to detect bots */}
+                                        <div className="form-group mb-3" style={{ display: 'none' }}>
+                                            <input type="text" ref={honeypotRef} onChange={handleHoneypotChange} placeholder="Leave this field empty" />
+                                        </div>
                                         <div className="form-group text-left mb-5">
-
-                                            <button type="submit" className="btn btn-primary dz-xs-flex m-r5"  >
+                                            <button disabled={(email == "" || password == "") ? true : false} type="submit" className="btn btn-primary dz-xs-flex m-r5"  >
                                                 {
                                                     load ? (
                                                         <Spinner animation="border" role="status" size="sm">
@@ -162,9 +186,6 @@ function Login(props) {
                                                 <Link to="/forgot-password">
                                                     Forgot password ?
                                                 </Link>
-                                                {/* <Link to="/admin/admin-login">
-                                                            Admin ?
-                                                        </Link> */}
                                             </div>
                                         </div>
                                     </form>
@@ -174,7 +195,6 @@ function Login(props) {
                                         </NavLink>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
